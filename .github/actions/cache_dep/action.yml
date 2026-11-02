@@ -1,7 +1,13 @@
 name: cache dependency
 description: cache dependency composite action
+inputs:
+  cache_required:
+    default: true
+    required: false
+    description: cache required?
 runs:
   using: composite
+  
   steps:
     - name: Cache dependencies
       id: cache
