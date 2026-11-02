@@ -15,13 +15,15 @@ runs:
   steps:
     - name: Cache dependencies
       id: cache
+      if: inputs.cache_required=='true'
       uses: actions/cache@v3
       with:
         path: node_modules
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      
     - name: Install dependencies
       id: cache_use
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true' || inputs.cache_required != 'true'
       run: |
         npm ci
         echo "cache_used=false">>"$GITHUB_OUTPUT"
